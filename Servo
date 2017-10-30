@@ -10,16 +10,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@Autonomous(name="ProperTwoOpMode.java", group="Linear Opmode")
+@Autonomous(name="ServoOpMode", group="Linear Opmode")
 //Disabled
-public class ProperTwoOpMode extends LinearOpMode {
+public class ServoOpMode extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    //private DcMotor leftDrive = null;
-    //private DcMotor rightDrive = null;
 
     Servo servo;
-    double servoPosition = 0,0;
+    double servoPosition = 0.0;
 
     @Override
     public void runOpMode() {
@@ -39,6 +37,5 @@ public class ProperTwoOpMode extends LinearOpMode {
         servoPosition = 1.0;
         servo.setPosition(servoPosition);
 
-        }
     }
-
+}
