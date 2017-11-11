@@ -36,6 +36,8 @@ public class Robot extends OpMode {
 
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        leftClaw.setPosition(0);
+        rightClaw.setPosition(0);
 
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -67,15 +69,28 @@ public class Robot extends OpMode {
         int position = arm.getCurrentPosition();
         telemetry.addData("Encoder Position", position);
 
-        if (gamepad2.left_stick_button) {
+        if (gamepad1.right_bumper) {
             arm.setTargetPosition(0);
             arm.setPower(.25);
         }
 
 
-        if (gamepad2.right_stick_button) {
+        if (gamepad1.left_bumper) {
             arm.setTargetPosition(350);
             arm.setPower(.25);
+
+        }
+
+        if (gamepad1.dpad_up) {
+            leftClaw.setPosition(1.0);
+            rightClaw.setPosition(.75);
+
+        }
+        if (gamepad1.dpad_down) {
+            leftClaw.setPosition(0);
+            rightClaw.setPosition(.75);
+
         }
     }
 }
+
