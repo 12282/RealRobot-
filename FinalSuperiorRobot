@@ -11,9 +11,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Robot", group="OpMode")
+@TeleOp(name="robottwo", group="OpMode")
 
-public class Robot extends OpMode {
+
+
+public class robottwo extends OpMode {
 
     DcMotor frontLeftDrive;
     DcMotor frontRightDrive;
@@ -37,7 +39,7 @@ public class Robot extends OpMode {
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         leftClaw.setPosition(0);
-        rightClaw.setPosition(0);
+        rightClaw.setPosition(1);
 
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -70,27 +72,33 @@ public class Robot extends OpMode {
         telemetry.addData("Encoder Position", position);
 
         if (gamepad1.right_bumper) {
-            arm.setTargetPosition(0);
+            arm.setTargetPosition(650);
             arm.setPower(.25);
         }
 
 
         if (gamepad1.left_bumper) {
-            arm.setTargetPosition(350);
+            arm.setTargetPosition(400);
             arm.setPower(.25);
 
         }
 
         if (gamepad1.dpad_up) {
             leftClaw.setPosition(1.0);
-            rightClaw.setPosition(.75);
-
         }
         if (gamepad1.dpad_down) {
+            rightClaw.setPosition(1.0);
+        }
+
+        if (gamepad1.dpad_down) {
             leftClaw.setPosition(0);
-            rightClaw.setPosition(.75);
+        }
+         if (gamepad1.dpad_up) {
+            rightClaw.setPosition(0);
 
         }
     }
 }
+
+
 
