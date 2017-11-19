@@ -1,0 +1,45 @@
+
+package org.firstinspires.ftc.teamcode;
+
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="OpMode")
+
+
+
+public class Autonomous extends LinearOpMode {
+
+    DcMotor frontLeftDrive;
+    DcMotor frontRightDrive;
+    DcMotor rearLeftDrive;
+    DcMotor rearRightDrive;
+
+    public Autonomous() {
+    }
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        waitForStart();
+       
+        frontLeftDrive = hardwareMap.dcMotor.get("frontLeftDrive");
+        frontRightDrive = hardwareMap.dcMotor.get("frontRightDrive");
+        rearLeftDrive = hardwareMap.dcMotor.get("rearLeftDrive");
+        rearRightDrive = hardwareMap.dcMotor.get("rearRightDrive");
+
+        frontLeftDrive.setPower(-1.0);
+        frontRightDrive.setPower(1.0);
+        rearLeftDrive.setPower(-1.0);
+        rearRightDrive.setPower(1.0);
+
+        sleep(1500);
+
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        rearLeftDrive.setPower(0);
+        rearRightDrive.setPower(0);
+         }
+    }
