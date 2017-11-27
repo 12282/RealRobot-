@@ -1,0 +1,70 @@
+
+package org.firstinspires.ftc.teamcode;
+
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="OpMode")
+
+
+
+public class autonomousOne extends LinearOpMode {
+
+    DcMotor right_drive;
+    DcMotor left_drive;
+    ColorSensor colorSensor;
+
+    public autonomousOne() {
+    }
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        float hsvValues[] = {0F,0F,0F};
+
+        final float values[] = hsvValues;
+
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier
+                ("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+
+        Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
+
+
+        waitForStart();
+
+        right_drive = hardwareMap.dcMotor.get("right_drive");
+        left_drive = hardwareMap.dcMotor.get("left_drive");
+
+        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
+
+
+        right_drive.setPower(-1.0);
+        left_drive.setPower(1.0);
+
+        sleep(1500);
+
+        right_drive.setPower(0);
+        left_drive.setPower(0);
+
+        if (colorSensor.red() * 8) {
+
+        }
+        /*OpMode drive code to be later edited in order to reach joules.
+        Color sensor instructions must include if statements to determine actions of servo when
+        desired color is detected. Servo must have instructions for both if statements that result
+        in knocking of joule. Color sensor and servo instructions included after drive instructions
+        as robot will have reached it's desired position.
+        */
+
+
+    }
+}
