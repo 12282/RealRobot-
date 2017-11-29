@@ -1,0 +1,129 @@
+
+package org.firstinspires.ftc.teamcode;
+
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="autonomousBlue", group="OpMode")
+
+public class autonomousBlue extends LinearOpMode {
+
+    DcMotor frontLeftDrive;
+    DcMotor frontRightDrive;
+    DcMotor rearLeftDrive;
+    DcMotor rearRightDrive;
+
+    ColorSensor colorSensor;
+
+    Servo servo;
+
+    /**
+     * Straight function propels object in a streamline direction for a given number of milliseconds
+     *
+     * @param milliseconds amount of time to sleep, in milliseconds
+     */
+
+    public void straight(long milliseconds) {
+        frontLeftDrive.setPower(1.0);
+        frontRightDrive.setPower(-1.0);
+        rearLeftDrive.setPower(1.0);
+        rearRightDrive.setPower(-1.0);
+
+        sleep(milliseconds);
+    }
+
+    public void back(long milliseconds) {
+        frontLeftDrive.setPower(-1.0);
+        frontRightDrive.setPower(1.0);
+        rearLeftDrive.setPower(-1.0);
+        rearRightDrive.setPower(1.0);
+    }
+
+
+    public void stopRobot() {
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        rearLeftDrive.setPower(0);
+        rearRightDrive.setPower(0);
+    }
+
+    public void turnRight(long milliseconds) {
+        frontLeftDrive.setPower(1.0);
+        frontRightDrive.setPower(-1.0);
+        rearLeftDrive.setPower(-1.0);
+        rearRightDrive.setPower(1.0);
+    }
+    public void turnLeft(long milliseconds) {
+        frontLeftDrive.setPower(-1.0);
+        frontRightDrive.setPower(1.0);
+        rearLeftDrive.setPower(1.0);
+        rearRightDrive.setPower(-1.0);
+    }
+
+    public boolean isRed() {
+        if (colorSensor.red() > 100 && colorSensor.green() < 100 && colorSensor.blue() < 100) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isBlue() {
+        if (colorSensor.red() < 100 && colorSensor.green() < 100 && colorSensor.blue() > 100) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public autonomousBlue() {
+    }
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        float hsvValues[] = {0F,0F,0F};
+
+        final float values[] = hsvValues;
+
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier
+                ("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+
+        Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
+
+        waitForStart();
+
+        frontLeftDrive = hardwareMap.dcMotor.get("frontLeftDrive");
+        frontRightDrive = hardwareMap.dcMotor.get("frontRightDrive");
+        rearLeftDrive = hardwareMap.dcMotor.get("rearLeftDrive");
+        rearRightDrive = hardwareMap.dcMotor.get("rearRightDrive");
+
+        servo = hardwareMap.servo.get("servo");
+
+        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
+
+        straight(600);
+
+        stopRobot();
+
+        if (isRed()){
+            turnRight(300);
+            turnLeft(300);
+            back(600);
+        }
+        if (isBlue()) {
+            turnLeft(300);
+            turnRight(300);
+            back(600);
+        }
+
+    }
+}
