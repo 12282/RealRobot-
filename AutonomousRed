@@ -82,7 +82,7 @@ public class autonomousRed extends LinearOpMode {
     }
 
 
-    public autonomousOne() {
+    public autonomousRed() {
     }
 
     @Override
