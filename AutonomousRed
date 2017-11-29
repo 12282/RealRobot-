@@ -66,6 +66,9 @@ public class autonomousRed extends LinearOpMode {
         rearLeftDrive.setPower(1.0);
         rearRightDrive.setPower(-1.0);
     }
+    public void dropServo() {
+        servo.setPosition(.5);
+    }
 
     public boolean isRed() {
         if (colorSensor.red() > 100 && colorSensor.green() < 100 && colorSensor.blue() < 100) {
@@ -115,11 +118,13 @@ public class autonomousRed extends LinearOpMode {
         stopRobot();
 
         if (isRed()){
+            dropServo();
             turnLeft(300);
             turnRight(300);
             back(600);
         }
         if (isBlue()) {
+            dropServo();
             turnRight(300);
             turnLeft(300);
             back(600);
