@@ -1,5 +1,4 @@
 
-
 package org.firstinspires.ftc.teamcode;
 
 
@@ -11,7 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="autonomousBlue", group="OpMode")
 
 public class autonomousBlue extends LinearOpMode {
@@ -21,7 +19,7 @@ public class autonomousBlue extends LinearOpMode {
     DcMotor rearLeftDrive;
     DcMotor rearRightDrive;
 
-    ColorSensor colorSensor;
+    ColorSensor sensor_color;
 
     Servo servo;
 
@@ -72,14 +70,14 @@ public class autonomousBlue extends LinearOpMode {
     }
 
     public boolean isRed() {
-        if (colorSensor.red() > 100 && colorSensor.green() < 100 && colorSensor.blue() < 100) {
+        if (sensor_color.red() > 100 && sensor_color.green() < 100 && sensor_color.blue() < 100) {
             return true;
         }
         return false;
     }
 
     public boolean isBlue() {
-        if (colorSensor.red() < 100 && colorSensor.green() < 100 && colorSensor.blue() > 100) {
+        if (sensor_color.red() < 100 && sensor_color.green() < 100 && sensor_color.blue() > 100) {
             return true;
         }
         return false;
@@ -101,7 +99,8 @@ public class autonomousBlue extends LinearOpMode {
 
         final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
-        Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
+        Color.RGBToHSV(sensor_color.red() * 8, sensor_color.green() * 8, sensor_color.blue() * 8, hsvValues);
+
 
         waitForStart();
 
@@ -112,7 +111,7 @@ public class autonomousBlue extends LinearOpMode {
 
         servo = hardwareMap.servo.get("servo");
 
-        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
+        sensor_color = hardwareMap.get(ColorSensor.class, "sensor_color");
 
         straight(600);
 
