@@ -1,0 +1,109 @@
+package org.firstinspires.ftc.teamcode;
+
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+@TeleOp(name="robot", group="OpMode")
+
+
+
+public class robot extends OpMode {
+
+    DcMotor frontLeftDrive;
+    DcMotor frontRightDrive;
+    DcMotor rearLeftDrive;
+    DcMotor rearRightDrive;
+    DcMotor arm;
+    Servo leftClaw;
+    Servo rightClaw;
+
+    @Override
+    public void init() {
+
+        frontLeftDrive = hardwareMap.dcMotor.get("frontLeftDrive");
+        frontRightDrive = hardwareMap.dcMotor.get("frontRightDrive");
+        rearLeftDrive = hardwareMap.dcMotor.get("rearLeftDrive");
+        rearRightDrive = hardwareMap.dcMotor.get("rearRightDrive");
+        arm = hardwareMap.dcMotor.get("arm");
+        leftClaw = hardwareMap.servo.get("leftClaw");
+        rightClaw = hardwareMap.servo.get("rightClaw");
+
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftClaw.setPosition(0);
+        rightClaw.setPosition(1);
+
+        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rearRightDrive.setDirection(DcMotor.Direction.REVERSE);
+    }
+
+
+    @Override
+    public void loop() {
+
+
+        double leftPower;
+        double rightPower;
+
+        double drive = -gamepad1.left_stick_y - gamepad1.right_stick_y;
+        double turn = -gamepad1.left_stick_x - gamepad1.right_stick_x;
+
+        leftPower = Range.clip(drive + turn, -1.0, 1.0);
+        rightPower = Range.clip(drive - turn, -1.0, 1.0);
+
+        frontLeftDrive.setPower(leftPower);
+        frontRightDrive.setPower(rightPower);
+        rearLeftDrive.setPower(leftPower);
+        rearRightDrive.setPower(rightPower);
+
+
+        int position = arm.getCurrentPosition();
+        telemetry.addData("Encoder Position", position);
+
+        if (gamepad1.a) {
+            arm.setTargetPosition(0);
+            arm.setPower(.4);
+        }
+
+
+        if (gamepad1.x) {
+            arm.setTargetPosition(600);
+            arm.setPower(.4);
+        }
+
+        if (gamepad1.y) {
+            arm.setTargetPosition(1200);
+            arm.setPower(.4);
+        }
+
+        if(gamepad1.b) {
+            arm.setTargetPosition(1600);
+            arm.setPower(.4);
+        }
+
+        if (gamepad1.dpad_up) {
+            leftClaw.setPosition(1.0);
+        }
+        if (gamepad1.dpad_down) {
+            rightClaw.setPosition(1.0);
+        }
+
+        if (gamepad1.dpad_down) {
+            leftClaw.setPosition(0);
+        }
+        if (gamepad1.dpad_up) {
+            rightClaw.setPosition(0);
+
+        }
+    }
+}
+
