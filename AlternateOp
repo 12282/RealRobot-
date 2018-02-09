@@ -1,0 +1,116 @@
+
+package org.firstinspires.ftc.teamcode;
+
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+@TeleOp(name="robot", group="OpMode")
+
+
+
+public class robot extends OpMode {
+
+    DcMotor frontLeftDrive;
+    DcMotor frontRightDrive;
+    DcMotor rearLeftDrive;
+    DcMotor rearRightDrive;
+    DcMotor arm;
+    Servo leftClaw;
+    Servo rightClaw;
+    Servo sensorServo;
+
+    @Override
+    public void init() {
+
+        frontLeftDrive = hardwareMap.dcMotor.get("frontLeftDrive");
+        frontRightDrive = hardwareMap.dcMotor.get("frontRightDrive");
+        rearLeftDrive = hardwareMap.dcMotor.get("rearLeftDrive");
+        rearRightDrive = hardwareMap.dcMotor.get("rearRightDrive");
+        arm = hardwareMap.dcMotor.get("arm");
+        leftClaw = hardwareMap.servo.get("leftClaw");
+        rightClaw = hardwareMap.servo.get("rightClaw");
+        sensorServo = hardwareMap.servo.get("sensorServo");
+        
+        
+        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rearRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        
+        arm.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.REVERSE);
+    }
+
+
+    @Override
+    public void loop() {
+
+
+        double leftPower;
+        double rightPower;
+        
+        double drive = -gamepad1.left_stick_y -gamepad1.right_stick_y;
+        double turn  = -gamepad1.left_stick_x -gamepad1.right_stick_x;
+
+        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+
+        frontLeftDrive.setPower(leftPower);
+        frontRightDrive.setPower(rightPower);
+        rearLeftDrive.setPower(leftPower);
+        rearRightDrive.setPower(rightPower);
+
+        double upPower;
+        double downPower;
+
+       double up = gamepad1.right_trigger;
+       double down = gamepad1.left_trigger;
+
+        upPower = Range.clip(up,1,1);
+        downPower = Range.clip(down,-1,-1);
+        
+        arm.setPower(upPower);
+        arm.setPower(downPower);
+        
+        
+        int position = arm.getCurrentPosition();
+        telemetry.addData("Encoder Position", position);
+        
+        if (gamepad1.left_bumper) {
+            arm.setTargetPosition(350);
+            arm.setPower(.2);
+        }
+        if (gamepad1.x){
+            arm.setTargetPosition(0);
+            arm.setPower(.2);
+        }
+        if (gamepad1.a) {
+            sensorServo.setPosition(1);
+        }
+        if (gamepad1.y) {
+            sensorServo.setPosition(0);
+        }
+
+        if (gamepad1.dpad_up) {
+            leftClaw.setPosition(1.0);
+        }
+        if (gamepad1.dpad_down) {
+            rightClaw.setPosition(1.0);
+        }
+
+        if (gamepad1.dpad_down) {
+            leftClaw.setPosition(0);
+        }
+        if (gamepad1.dpad_up) {
+            rightClaw.setPosition(0);
+
+        }
+    }
+}
