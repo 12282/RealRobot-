@@ -71,23 +71,23 @@ public class robot extends OpMode {
 
         if (gamepad1.a) {
             arm.setTargetPosition(0);
-            arm.setPower(.4);
+            arm.setPower(.5);
         }
 
 
         if (gamepad1.x) {
-            arm.setTargetPosition(600);
-            arm.setPower(.4);
+            arm.setTargetPosition(2400);
+            arm.setPower(.5);
         }
 
         if (gamepad1.y) {
-            arm.setTargetPosition(1200);
-            arm.setPower(.4);
+            arm.setTargetPosition(4200);
+            arm.setPower(.5);
         }
 
         if(gamepad1.b) {
-            arm.setTargetPosition(1600);
-            arm.setPower(.4);
+            arm.setTargetPosition(6800);
+            arm.setPower(.5);
         }
 
         if (gamepad1.dpad_up) {
