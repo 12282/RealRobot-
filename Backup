@@ -1,0 +1,59 @@
+
+
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Backup", group="OpMode")
+
+public class Backup extends LinearOpMode {
+
+    DcMotor frontLeftDrive;
+    DcMotor frontRightDrive;
+    DcMotor rearLeftDrive;
+    DcMotor rearRightDrive;
+
+    public void back(long milliseconds) {
+        frontLeftDrive.setPower(-1.0);
+        frontRightDrive.setPower(1.0);
+        rearLeftDrive.setPower(-1.0);
+        rearRightDrive.setPower(1.0);
+    }
+
+    public void straight(long milliseconds) {
+        frontLeftDrive.setPower(1.0);
+        frontRightDrive.setPower(-1.0);
+        rearLeftDrive.setPower(1.0);
+        rearRightDrive.setPower(-1.0);
+    }
+
+    public Backup() {
+    }
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        waitForStart();
+
+        frontLeftDrive = hardwareMap.dcMotor.get("frontLeftDrive");
+        frontRightDrive = hardwareMap.dcMotor.get("frontRightDrive");
+        rearLeftDrive = hardwareMap.dcMotor.get("rearLeftDrive");
+        rearRightDrive = hardwareMap.dcMotor.get("rearRightDrive");
+
+        back(1500);
+        sleep(1500);
+
+        straight(300);
+        sleep(300);
+
+
+
+
+
+    }
+
+    }
