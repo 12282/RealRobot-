@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.teamcode;
 
 
@@ -11,11 +10,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="robottwo", group="OpMode")
+@TeleOp(name="robot", group="OpMode")
 
 
 
-public class robottwo extends OpMode {
+public class robot extends OpMode {
 
     DcMotor frontLeftDrive;
     DcMotor frontRightDrive;
@@ -38,8 +37,6 @@ public class robottwo extends OpMode {
 
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftClaw.setPosition(0);
-        rightClaw.setPosition(1);
 
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -55,11 +52,11 @@ public class robottwo extends OpMode {
         double leftPower;
         double rightPower;
 
-        double drive = -gamepad1.left_stick_y -gamepad1.right_stick_y;
-        double turn  = -gamepad1.left_stick_x -gamepad1.right_stick_x;
+        double drive = -gamepad1.left_stick_y - gamepad1.right_stick_y;
+        double turn = -gamepad1.left_stick_x - gamepad1.right_stick_x;
 
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+        leftPower = Range.clip(drive + turn, -1.0, 1.0);
+        rightPower = Range.clip(drive - turn, -1.0, 1.0);
 
         frontLeftDrive.setPower(leftPower);
         frontRightDrive.setPower(rightPower);
@@ -67,38 +64,45 @@ public class robottwo extends OpMode {
         rearRightDrive.setPower(rightPower);
 
 
-
         int position = arm.getCurrentPosition();
         telemetry.addData("Encoder Position", position);
 
-        if (gamepad1.right_bumper) {
-            arm.setTargetPosition(650);
-            arm.setPower(.25);
+        if (gamepad1.a) {
+            arm.setTargetPosition(0);
+            arm.setPower(1);
         }
 
 
-        if (gamepad1.left_bumper) {
-            arm.setTargetPosition(400);
-            arm.setPower(.25);
+        if (gamepad1.x) {
+            arm.setTargetPosition(1360);
+            arm.setPower(1);
+        }
 
+        if (gamepad1.y) {
+            arm.setTargetPosition(4550);
+            arm.setPower(1);
+        }
+
+        if(gamepad1.b) {
+            arm.setTargetPosition(5950);
+            arm.setPower(1);
         }
 
         if (gamepad1.dpad_up) {
-            leftClaw.setPosition(1.0);
+            leftClaw.setPosition(0.7);
         }
         if (gamepad1.dpad_down) {
-            rightClaw.setPosition(1.0);
+            rightClaw.setPosition(0.7);
         }
 
         if (gamepad1.dpad_down) {
-            leftClaw.setPosition(0);
+            leftClaw.setPosition(.3);
         }
-         if (gamepad1.dpad_up) {
-            rightClaw.setPosition(0);
+        if (gamepad1.dpad_up) {
+            rightClaw.setPosition(.3);
 
         }
     }
 }
-
 
 
